@@ -1,10 +1,13 @@
 package edu.pitt.cs;
 
 //TODO: Import libraries as needed
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.NoSuchElementException;
 
 public class SortedCollection {
 	// TODO: Add member variables or methods as needed
+	ArrayList<Integer> sortList = new ArrayList<Integer>();
 
 	/**
 	 * Adds the number n to the collection.
@@ -14,6 +17,7 @@ public class SortedCollection {
 	 */
 	public boolean add(int n) {
 		// TODO: Implement
+		sortList.add(n);
 		return true;
 	}
 
@@ -25,7 +29,14 @@ public class SortedCollection {
 	 */
 	public int remove() throws NoSuchElementException {
 		// TODO: Implement
-		return 0;
+		int removed;
+		if(sortList.size() == 0) throw new NoSuchElementException();
+		else{
+			Collections.sort(sortList);
+			removed = sortList.get(0);
+			sortList.remove(0);
+		}
+		return removed;
 	}
 
 	/**
@@ -50,7 +61,18 @@ public class SortedCollection {
 		
 		// TODO: add numbers in commandline arguments to collection using the add(int) method.
 		// If any commandline argument is not a number, call showUsage() and return.
-		
+		for (String i : args){
+			try {
+				Integer.parseInt(i);
+				
+			}catch (NumberFormatException e){
+				showUsage();
+				return;
+			}
+
+			collection.add(Integer.parseInt(i));
+		}
+
 		System.out.print("sorted: ");
 		for (int i = 0; i < args.length; i++) {
 			int num = collection.remove();
